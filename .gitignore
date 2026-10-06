@@ -8,3 +8,9 @@ dist/
 input/
 output/
 data/
+# LaTeX by-products of manual.tex
+*.aux
+*.log
+*.out
+*.toc
+*.synctex.gz

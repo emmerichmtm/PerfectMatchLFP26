@@ -50,7 +50,8 @@ def evaluate(s, l, settings, rules_by_id) -> dict:
     for owner, partner, kind in ((s, l, "own_rule"), (l, s, "partner_rule")):
         for rule in rules_by_id.get(owner.id, []):
             if rule.kind == "staff_check":
-                rule_results.append({"owner": owner.id, "label": rule.describe(), "result": "staff"})
+                wish = f'"{rule.text}"' if rule.text else (rule.note or "see the survey answer")
+                rule_results.append({"owner": owner.id, "label": rule.describe(), "result": "staff", "wish": wish})
                 continue
             result = rulebook.check(rule, owner, partner)
             checks.append((kind, result, f"{owner.id}: {rule.describe()}"))
@@ -120,8 +121,7 @@ def compute(survey_text: str, settings: dict, rule_dicts, locks=(), forbids=(), 
     for s_id, l_id in chosen:
         e = evaluations[(s_id, l_id)]
         notes = [f"to resolve: {text}" for text in e["uncertain"]]
-        notes += [f"staff check ({r['owner']}): {r['label'].removeprefix('Staff check: ')}"
-                  for r in e["rules"] if r["result"] == "staff"]
+        notes += [f"staff check ({r['owner']}): {r['wish']}" for r in e["rules"] if r["result"] == "staff"]
         for pid in (s_id, l_id):
             notes += [f"{pid}: {flag}" for flag in people[pid].flags if "gender is blank" not in flag]
         pairs.append({"student": s_id, "local": l_id, "score": e["score"], "score_min": e["score_min"],

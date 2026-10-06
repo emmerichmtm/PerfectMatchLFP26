@@ -1,0 +1,24 @@
+PerfectMatchLFP26 - Local Friendship Programme 2026 matcher for 64-bit Windows
+
+1. Right-click PerfectMatchLFP26-Windows.zip and choose Extract All.
+2. Open the extracted PerfectMatchLFP26 folder.
+3. Double-click PerfectMatchLFP26.exe. Your browser opens automatically.
+4. Click "Try fictional example", then "Compute iteration 1".
+5. Read manual.pdf (also linked at the top of the page) for the full workflow.
+
+For the real round: choose the survey export CSV on the page, check the
+must-haves, compute, review, iterate, then save result.csv and report.txt.
+Also save settings.csv and must_haves.csv so the run can be repeated later.
+Keep the survey export and all saved files together in a dated folder.
+
+No Python installation or internet connection is needed.
+"localhost" refers to your own computer. The files stay on it.
+Keep the _internal folder beside PerfectMatchLFP26.exe; do not move the EXE alone.
+Click "Close app" when finished: closing the tab alone does not stop the app.
+If port 8766 is busy, the app opens another free local address.
+If Windows or your organisation blocks this unsigned app, ask IT to review it.
+
+templates\settings.csv         default weights and settings
+templates\survey_example.csv   fictional survey export (no real people)
+
+Source code: https://github.com/emmerichmtm/PerfectMatchLFP26 (private)

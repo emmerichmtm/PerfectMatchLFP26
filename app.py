@@ -89,6 +89,8 @@ class RequestHandler(BaseHTTPRequestHandler):
         elif path == "/api/example":
             self.reply(200, {"name": "survey_example.csv",
                              "survey": decode((ASSETS / "examples" / "survey_example.csv").read_bytes())})
+        elif path == "/manual.pdf" and (ASSETS / "manual.pdf").is_file():
+            self.reply(200, (ASSETS / "manual.pdf").read_bytes(), "application/pdf")
         elif path == "/templates/settings.csv":
             self.reply(200, scoring.settings_to_csv(scoring.default_settings()), "text/csv; charset=utf-8")
         elif path == "/favicon.ico":

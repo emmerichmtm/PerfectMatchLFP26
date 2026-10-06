@@ -131,6 +131,25 @@ Command line, same calculation:
 
 `--settings` and `--rules` are optional (defaults and proposed rules).
 
+## Staff manual and Windows package
+
+`manual.pdf` is the illustrated A4 staff manual, linked at the top of the page and included in
+the package. Its source is `manual.tex` with screenshots of the fictional example in `manual/`;
+compile it with `pdflatex manual.tex` twice (standard LaTeX packages only).
+
+The ready-to-run ZIP needs no Python on the staff computer. Build it on 64-bit Windows:
+
+```powershell
+.\.venv\Scripts\python.exe -m pip install pyinstaller==6.22.3
+.\build_windows.ps1
+```
+
+This creates `dist/PerfectMatchLFP26-Windows.zip` with `PerfectMatchLFP26.exe`, its `_internal`
+folder (Python runtime, PuLP and the CBC solver), `START HERE.txt`, `manual.pdf`, templates
+(default `settings.csv` and the fictional survey) and third-party notices.
+`PerfectMatchLFP26.spec` controls the build; `package_files.py` adds the staff files. The
+executable is unsigned; organisations that block unsigned programs need IT to review it.
+
 ## Development
 
 ```bash

@@ -491,12 +491,13 @@ function pairDetail(p, people, r) {
       return card(label, x.grade, x.d, [x.detail, x.sides ? `international: grade ${x.side_grades.student} · local: grade ${x.side_grades.local}` : '']);
     }));
   const shared = p.criteria.hobbies.shared || [];
+  const notes = p.notes.filter(n => !n.startsWith('staff check'));  // already listed with the must-have results
   return el('div', {}, strip,
     el('div', {class: 'detail-grid'}, personCard(people[p.student], people[p.local], 'international', shared), personCard(people[p.local], people[p.student], 'local', shared)),
     p.rules.length ? el('ul', {class: 'rule-results'}, p.rules.map(x => el('li', {},
       el('span', {class: `icon ${x.result === 'met' ? 'ok' : 'warn'}`, text: x.result === 'met' ? '✓ ' : x.result === 'staff' ? '⚑ ' : '? '}),
-      `${x.owner}: ${x.label} - ${x.result === 'staff' ? 'check by hand' : x.result}`))) : null,
-    p.notes.length ? el('ul', {class: 'rule-results'}, p.notes.map(n => el('li', {text: `• ${n}`}))) : null);
+      x.result === 'staff' ? `${x.owner}: check by hand - ${x.wish}` : `${x.owner}: ${x.label} - ${x.result}`))) : null,
+    notes.length ? el('ul', {class: 'rule-results'}, notes.map(n => el('li', {text: `• ${n}`}))) : null);
 }
 
 function renderLeft() { renderData(); renderWeights(); renderAnchors(); renderRules(); renderPins(); refreshChrome(); }

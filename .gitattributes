@@ -7,3 +7,5 @@
 *.bat text eol=crlf
 # The example mirrors the real export byte for byte (Windows code page, CRLF).
 examples/*.csv -text
+*.pdf binary
+*.png binary
