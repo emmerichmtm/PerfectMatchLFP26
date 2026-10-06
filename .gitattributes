@@ -1,0 +1,9 @@
+* text=auto
+*.py text eol=lf
+*.js text eol=lf
+*.css text eol=lf
+*.html text eol=lf
+*.md text eol=lf
+*.bat text eol=crlf
+# The example mirrors the real export byte for byte (Windows code page, CRLF).
+examples/*.csv -text

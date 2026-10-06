@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="session-token" content="__SESSION_TOKEN__">
+  <title>Local Friendship Matcher 2026</title>
+  <link rel="stylesheet" href="/app.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+<header class="bar">
+  <div class="brand">Local Friendship Matcher <span>2026</span></div>
+  <span class="badge">On your computer</span>
+  <span id="phase" class="phase">Load the survey export to begin.</span>
+  <button id="stop" class="text-button">Close app</button>
+</header>
+<div class="workspace">
+  <aside class="panel left" aria-label="Data, weights and must-haves">
+    <section class="card" aria-labelledby="data-title">
+      <div class="card-head">
+        <h2 id="data-title"><span class="step">1</span>Survey data</h2>
+        <button id="example" class="secondary small">Try fictional example</button>
+      </div>
+      <label class="file">Choose survey CSV<input id="survey-file" type="file" accept=".csv,text/csv"></label>
+      <p id="survey-status" class="hint">The survey export as CSV, with both heading rows. Files stay on this computer.</p>
+      <div id="data-summary"></div>
+    </section>
+
+    <section class="card" aria-labelledby="weights-title">
+      <div class="card-head">
+        <h2 id="weights-title"><span class="step">2</span>Weights</h2>
+        <div class="file-actions">
+          <label class="link">Load<input id="settings-file" type="file" accept=".csv,text/csv" aria-label="Load settings CSV"></label>
+          <button id="save-settings" class="link">Save</button>
+          <button id="reset-settings" class="link">Defaults</button>
+        </div>
+      </div>
+      <p class="hint">1 = minor, 10 = decisive. Each weight is the exponent of that criterion's desirability in the overall product.</p>
+      <div id="weights"></div>
+      <details>
+        <summary>Desirability scales and hard rules</summary>
+        <p class="hint">Harrington desirability: the "just acceptable" value scores 50 %, the "fully satisfactory" value 80 %.</p>
+        <div id="anchors" class="anchors"></div>
+        <div id="hard-rules" class="toggles"></div>
+      </details>
+    </section>
+
+    <section class="card" aria-labelledby="rules-title">
+      <div class="card-head">
+        <h2 id="rules-title"><span class="step">3</span>Must-haves</h2>
+        <div class="file-actions">
+          <label class="link">Load<input id="rules-file" type="file" accept=".csv,text/csv" aria-label="Load must-have rules CSV"></label>
+          <button id="save-rules" class="link">Save</button>
+        </div>
+      </div>
+      <p class="hint">Proposed from each person's own words. Check them, edit or remove; proposed rules apply until you change them.</p>
+      <div id="rule-filters" class="filters" role="group" aria-label="Show must-haves"></div>
+      <div id="rules"><p class="hint">Load the survey to see the must-haves.</p></div>
+      <div id="add-rule" class="add-rule" hidden></div>
+    </section>
+
+    <section id="pins-card" class="card" aria-labelledby="pins-title" hidden>
+      <h2 id="pins-title"><span class="step">4</span>Locked and forbidden pairs</h2>
+      <p class="hint">Set from the pairs table. Applied in the next computation.</p>
+      <ul id="pins" class="pins"></ul>
+    </section>
+
+    <div class="compute-bar">
+      <button id="compute" class="primary" disabled>Compute iteration 1 →</button>
+      <p id="compute-status" class="hint" role="status" aria-live="polite"></p>
+    </div>
+  </aside>
+
+  <main class="panel right" aria-label="Results">
+    <div id="iterations" class="iterations" role="group" aria-label="Iterations"></div>
+    <div id="stale" class="banner" hidden></div>
+    <div id="empty" class="empty">
+      <h2>Match internationals with local friends</h2>
+      <ol>
+        <li><strong>Load</strong> the survey export, or try the fictional example.</li>
+        <li><strong>Interact:</strong> set the weights and check each person's must-have on the left.</li>
+        <li><strong>Compute:</strong> every international gets a partner if the rules allow it; the lowest pair is raised as far as possible.</li>
+        <li><strong>Review</strong> grades, constraints and each pair. Lock good pairs, forbid unsuitable ones, adjust rules.</li>
+        <li><strong>Iterate</strong> until satisfied, then save result.csv and report.txt.</li>
+      </ol>
+      <p class="hint">Grades: 1 insufficient · 2 barely satisfying · 3 ok / solid · 4 very good · 5 perfect.</p>
+    </div>
+    <div id="results" hidden>
+      <div class="result-head">
+        <h2 id="result-title">Iteration 1</h2>
+        <div class="downloads">
+          <button id="download-result" class="primary small">Save result.csv</button>
+          <button id="download-report" class="secondary small">Save report.txt</button>
+        </div>
+      </div>
+      <div id="tiles" class="tiles"></div>
+      <div id="alerts"></div>
+      <section class="block" aria-labelledby="dist-title">
+        <div class="block-head"><h3 id="dist-title">Criteria achievement across pairs</h3><div id="legend" class="legend"></div></div>
+        <div id="distribution"></div>
+      </section>
+      <section class="block" aria-labelledby="constraints-title">
+        <h3 id="constraints-title">Constraints in this solution</h3>
+        <ul id="constraints" class="constraints"></ul>
+      </section>
+      <section class="block" aria-labelledby="pairs-title">
+        <div class="block-head"><h3 id="pairs-title">Pairs</h3><span class="hint">Click a pair for both profiles. Lock keeps a pair in the next iteration; forbid excludes it.</span></div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th scope="col">Pair</th><th scope="col">Overall</th>
+              <th scope="col">Lang.</th><th scope="col">Profile</th><th scope="col">Age</th><th scope="col">Hobbies</th>
+              <th scope="col">Review</th><th scope="col"><span class="visually-hidden">Lock or forbid</span></th></tr></thead>
+            <tbody id="pairs"></tbody>
+          </table>
+        </div>
+      </section>
+      <section class="block" aria-labelledby="unmatched-title">
+        <h3 id="unmatched-title">Not matched or excluded</h3>
+        <div id="unmatched"></div>
+      </section>
+      <details class="block">
+        <summary>Report text</summary>
+        <pre id="report"></pre>
+      </details>
+    </div>
+  </main>
+</div>
+<div id="tooltip" class="tooltip" role="tooltip" hidden></div>
+</body>
+</html>
