@@ -1,4 +1,4 @@
-# Local Friendship Matcher 2026
+# PerfectMatchLFP26
 
 Suggests one-to-one pairs of international JYU degree students and local friends from the
 **2026 Local Friendship Programme survey export**. It is the 2026 edition of

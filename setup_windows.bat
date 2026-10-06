@@ -1,7 +1,7 @@
 @echo off
 setlocal
 cd /d "%~dp0"
-echo Local Friendship Matcher 2026 - first-time setup
+echo PerfectMatchLFP26 - first-time setup
 echo.
 if exist ".venv\Scripts\python.exe" goto install
 py -3.12 -c "import sys" >nul 2>&1
@@ -22,7 +22,7 @@ if not exist ".venv\Scripts\python.exe" goto failed
 ".venv\Scripts\python.exe" -m pip install -r requirements.txt
 if errorlevel 1 goto failed
 echo.
-echo Setup complete. Double-click start.bat to open the matcher.
+echo Setup complete. Double-click start.bat to open the app.
 if not defined LFM_NO_PAUSE pause
 exit /b 0
 :failed

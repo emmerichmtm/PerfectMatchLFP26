@@ -39,7 +39,7 @@ def settings_of(data) -> dict:
 
 
 class RequestHandler(BaseHTTPRequestHandler):
-    server_version = "LocalFriendshipMatcher"
+    server_version = "PerfectMatchLFP26"
     sys_version = ""
 
     def log_message(self, *_):
@@ -191,7 +191,7 @@ def main(argv=None):
                 raise
             server = LocalServer(0)
         if sys.stdout is not None:
-            print(f"Local Friendship Matcher 2026 is running at {server.origin}", flush=True)
+            print(f"PerfectMatchLFP26 is running at {server.origin}", flush=True)
         if not args.no_browser:
             webbrowser.open(server.origin)
         try:
@@ -201,10 +201,10 @@ def main(argv=None):
         finally:
             server.server_close()
     except Exception as exc:
-        message = f"Local Friendship Matcher could not start: {exc}"
+        message = f"PerfectMatchLFP26 could not start: {exc}"
         if getattr(sys, "frozen", False) and os.name == "nt":
             import ctypes
-            ctypes.windll.user32.MessageBoxW(0, message, "Local Friendship Matcher 2026", 16)
+            ctypes.windll.user32.MessageBoxW(0, message, "PerfectMatchLFP26", 16)
         else:
             print(message, file=sys.stderr)
         return 1

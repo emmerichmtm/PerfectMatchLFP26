@@ -226,7 +226,7 @@ def _grade(d):
 
 def make_report(result, settings, rule_list, survey_text, survey_name, locked, forbidden) -> str:
     s = result["summary"]
-    lines = ["LOCAL FRIENDSHIP MATCHER 2026 - MATCHING REPORT", "Status: SUCCESS",
+    lines = ["PERFECTMATCH LFP26 - MATCHING REPORT", "Status: SUCCESS",
              f"Iteration: {result['iteration']}",
              f"Run time (UTC): {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M:%S')}",
              f"Survey file: {survey_name}",

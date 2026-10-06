@@ -1,5 +1,5 @@
 'use strict';
-// Local Friendship Matcher 2026 - interact (weights, must-haves), compute, review, iterate, save.
+// PerfectMatchLFP26 - interact (weights, must-haves), compute, review, iterate, save.
 const token = document.querySelector('meta[name="session-token"]').content;
 const $ = id => document.getElementById(id);
 const GRADE_FLOORS = [[0.9, 5], [0.8, 4], [0.65, 3], [0.5, 2]];
@@ -38,7 +38,7 @@ async function api(path, body) {
     headers: {'Content-Type': 'application/json', 'X-Session-Token': token}};
   let response;
   try { response = await fetch(path, options); }
-  catch { throw new Error('Cannot reach the app. Start Local Friendship Matcher again and reload this page.'); }
+  catch { throw new Error('Cannot reach the app. Start PerfectMatchLFP26 again and reload this page.'); }
   const data = await response.json().catch(() => ({}));
   if (!response.ok) throw new Error(data.error || 'Something went wrong. Try again.');
   return data;
