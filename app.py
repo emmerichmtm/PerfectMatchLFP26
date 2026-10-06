@@ -97,6 +97,21 @@ class RequestHandler(BaseHTTPRequestHandler):
             self.reply(404, {"error": "Page not found."})
 
     def do_POST(self):
+        # Read the body before any refusal: closing a socket with unread data resets the connection
+        # on Windows, and the page would show "cannot reach the app" instead of the refusal message.
+        try:
+            length = int(self.headers.get("Content-Length", "0"))
+        except ValueError:
+            length = 0
+        if length <= 0 or length > MAX_REQUEST_BYTES:
+            self.close_connection = True
+            self.reply(413, {"error": "The files are too large (10 MB limit in total)."})
+            return
+        try:
+            self.connection.settimeout(30)
+            body = self.rfile.read(length)
+        except OSError:
+            return
         if not self.valid_host():
             return
         if self.headers.get("Origin", "") not in {f"http://{host}" for host in self.server.allowed_hosts}:
@@ -109,12 +124,7 @@ class RequestHandler(BaseHTTPRequestHandler):
             self.reply(415, {"error": "Expected JSON."})
             return
         try:
-            length = int(self.headers.get("Content-Length", "0"))
-            if length <= 0 or length > MAX_REQUEST_BYTES:
-                self.reply(413, {"error": "The files are too large (10 MB limit in total)."})
-                return
-            self.connection.settimeout(30)
-            data = json.loads(self.rfile.read(length).decode("utf-8"))
+            data = json.loads(body.decode("utf-8"))
             if not isinstance(data, dict):
                 raise ValueError("Expected a JSON object.")
         except (ValueError, UnicodeError, OSError) as exc:
